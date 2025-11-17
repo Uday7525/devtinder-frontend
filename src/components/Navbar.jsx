@@ -1,5 +1,9 @@
+import { useSelector } from "react-redux"
 
 const Navbar = () => {
+
+  const user=useSelector(store=>store.user)
+
   return (
      <div className="navbar bg-base-300 shadow-sm">
     <div className="flex-1 px-2 mx-2 w-72 flex items-center gap-2">
@@ -9,15 +13,17 @@ const Navbar = () => {
         className="h-13 w-13 mr-2 rounded-full hover:cursor-pointer hover:border-4  hover:border-orange-500" />
     <span className="text-lg font-bold text-orange-500 hover:cursor-pointer hover:text-orange-300">DevTinder</span>
   </div>
-  <div className="flex gap-2">
+  {user&&(<div className="flex gap-2">
+    <div className="flex justify-center items-center">Welcome, {user.firstName}</div>
     <div className="dropdown dropdown-end">
-      <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar mx-5">
+      <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar mx-5 flex items-center">
         <div className="w-13 rounded-full border-3 border-orange-500 hover:border-orange-300">
           <img
             alt="Tailwind CSS Navbar component"
-            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+            src={user.imageUrl} />
         </div>
       </div>
+      
       <ul
         tabIndex="-1"
         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
@@ -31,7 +37,7 @@ const Navbar = () => {
         <li><a>Logout</a></li>
       </ul>
     </div>
-  </div>
+  </div>)}
 </div>
   )
 }
