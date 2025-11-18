@@ -9,18 +9,20 @@ const Login = () => {
 
     const [emailId, setEmailId] = useState("pavanpalsam@gmail.com");
     const [password, setPassword] = useState("Pavan@7525");
+    const [error,setError]=useState("");
+    const[showPass,setShowPass]=useState(false)
     const navigate=useNavigate()
     const dispatch=useDispatch()
     const handleSubmit= async(e)=>{
         e.preventDefault()
         try{
             const response= await axios.post( BASE_URL + "/login", {emailId, password},{withCredentials:true});
-            console.log("Login successful", response);
             dispatch(addUser(response.data))
             return navigate("/")
         }catch(error){
-            console.error("Login failed", error);
-         }
+          setError("Invalid EmailId or Password")
+          console.error("Login failed", error);
+        }
     }
 
   return (
@@ -44,12 +46,18 @@ const Login = () => {
       <div>
         <label className="text-white font-medium">Password</label>
         <input
-          type="password"
+          type={!showPass?"password":"text"}
           value={password}
           placeholder="Enter your password"
           className="w-full px-4 py-3 mt-1 rounded-xl bg-white/30 border border-white/40 placeholder-white/70 text-white focus:outline-none focus:ring-2 focus:ring-white/70"
           onChange={(e)=>setPassword(e.target.value)}
         />
+      </div>
+      <div className="flex items-center hover:cursor-pointer">
+        <input type="checkbox"
+        onClick={()=>setShowPass(prevState=>!prevState)}
+        />
+        <span className="ml-1 text-center">show password</span>
       </div>
       <div className="flex justify-end">
         <a href="#" className="text-white/80 text-sm hover:text-white underline">
@@ -57,10 +65,11 @@ const Login = () => {
         </a>
       </div>
       <button
-        className="w-full bg-white text-indigo-600 font-bold py-3 rounded-xl hover:bg-white/90 transition shadow-lg"
+        className="w-full bg-white text-indigo-600 font-bold py-3 rounded-xl hover:bg-white/90 transition shadow-lg" type="submit"
       >
         Login
       </button>
+      <p className="text-red-500 text-center">{error}</p>
     </form>
     <p className="text-center text-white/80 mt-6">
       Don’t have an account?

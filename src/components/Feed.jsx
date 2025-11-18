@@ -1,9 +1,36 @@
+import axios from "axios"
+import UserCard from "./UserCard"
+import { BASE_URL } from "../utils/constants"
+import { useDispatch, useSelector } from "react-redux"
+import { addFeed } from "../utils/userFeedSlice"
+import { useEffect } from "react"
 
 
 const Feed=()=>{
-    return <div>
-        Feed page
-    </div>
+    
+    const feed=useSelector((store)=>store.feed)
+    console.log(feed)
+    
+    const dispatch=useDispatch()
+    const fetchFeed=async()=>{
+        if(feed) return;
+        try{
+            const res=await axios.get(BASE_URL+"/user/feed",{withCredentials:true});
+            dispatch(addFeed(res.data))
+        }
+        catch(err){
+            console.log(err)
+        }
+
+
+    }
+    useEffect(()=>{
+        fetchFeed();
+    },[])
+
+    return (feed&&<div className="flex justify-center items-center my-2">
+        <UserCard user={feed.data[0]}/>
+    </div>)
 }
 
 export default Feed
