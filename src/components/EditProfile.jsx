@@ -10,10 +10,10 @@ import Popup from "./Popup"
 const EditProfile=({user})=>{
     const [firstName,setFirstName]=useState(user.firstName)
     const [lastName,setLastName]=useState(user.lastName)
-    const [bio,setBio]=useState(user.bio)
+    const [bio,setBio]=useState(user.bio||"")
     const [imageUrl,setImageUrl]=useState(user.imageUrl)
-    const [age,setAge]=useState(user.age)
-    const [gender,setGender]=useState(user.gender)
+    const [age,setAge]=useState(user.age || "")
+    const [gender,setGender]=useState(user.gender||"")
     const [skills,setSkills]=useState(user.skills)
     const [error,setError]=useState("")
     const [isUpdated,setIsUpdated]=useState(false)

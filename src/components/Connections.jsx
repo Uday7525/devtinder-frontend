@@ -20,7 +20,7 @@ const Connections = () => {
         fetchConnections()
     },[])
     if (!connections) return;
-    if(connections.length===0) return <h1>No Connections</h1>
+    if(connections.length===0) return <h1 className='font-bold text-3xl text-center my-10'>No Connections</h1>
   return (
     <div className='justify-center my-10 overflow-auto flex flex-col items-center'>
         <h1 className='"font-bold text-3xl text-center'>Connections</h1>
@@ -30,7 +30,7 @@ const Connections = () => {
            <div className='mx-2'>
             <h1>{connection.firstName + " " + connection.lastName}</h1>
             {connection.age&&connection.gender&&<p>{connection.age + ", " +connection.gender}</p>}
-            <p>{connection.bio}</p>
+            <p >{connection.bio}</p>
            </div>
         </div>)}
     </div>

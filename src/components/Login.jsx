@@ -1,83 +1,130 @@
-import { useState} from "react";
+import { useState } from "react";
 import axios from "axios";
-import {useDispatch} from "react-redux"
-import {addUser} from "../utils/userSlice"
-import {BASE_URL} from "../utils/constants"
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../utils/constants";
 
 const Login = () => {
+  const [emailId, setEmailId] = useState("");
+  const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [isLoginForm, setIsLoginForm] = useState(true);
+  const [error, setError] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-    const [emailId, setEmailId] = useState("pavanpalsam@gmail.com");
-    const [password, setPassword] = useState("Pavan@7525");
-    const [error,setError]=useState("");
-    const[showPass,setShowPass]=useState(false)
-    const navigate=useNavigate()
-    const dispatch=useDispatch()
-    const handleSubmit= async(e)=>{
-        e.preventDefault()
-        try{
-            const response= await axios.post( BASE_URL + "/login", {emailId, password},{withCredentials:true});
-            dispatch(addUser(response.data))
-            return navigate("/")
-        }catch(error){
-          setError("Invalid EmailId or Password")
-          console.error("Login failed", error);
-        }
+  const handleLogin = async () => {
+    try {
+      const res = await axios.post(
+        BASE_URL + "/login",
+        {
+          emailId,
+          password,
+        },
+        { withCredentials: true }
+      );
+      dispatch(addUser(res.data));
+      return navigate("/");
+    } catch (err) {
+      setError(err?.response?.data || "Something went wrong");
     }
+  };
+
+  const handleSignUp = async () => {
+    try {
+      const res = await axios.post(
+        BASE_URL + "/signup",
+        { firstName, lastName, emailId, password },
+        { withCredentials: true }
+      );
+      dispatch(addUser(res.data.data));
+      return navigate("/profile");
+    } catch (err) {
+      setError(err?.response?.data || "Something went wrong");
+    }
+  };
 
   return (
-    
-  <div className="flex justify-center mt-15 mb-15">
-  <div className="w-full max-w-md bg-gray-900 backdrop-blur-xl shadow-2xl rounded-2xl p-8 border border-white/30">
+    <div className="flex justify-center my-10">
+      <div className="card bg-base-300 w-96 shadow-xl">
+        <div className="card-body">
+          <h2 className="card-title justify-center">
+            {isLoginForm ? "Login" : "Sign Up"}
+          </h2>
+          <div>
+            {!isLoginForm && (
+              <>
+                <label className="form-control w-full max-w-xs my-2">
+                  <div className="label">
+                    <span className="label-text">First Name</span>
+                  </div>
+                  <input
+                    type="text"
+                    value={firstName}
+                    className="input input-bordered w-full max-w-xs"
+                    onChange={(e) => setFirstName(e.target.value)}
+                  />
+                </label>
+                <label className="form-control w-full max-w-xs my-2">
+                  <div className="label">
+                    <span className="label-text">Last Name</span>
+                  </div>
+                  <input
+                    type="text"
+                    value={lastName}
+                    className="input input-bordered w-full max-w-xs"
+                    onChange={(e) => setLastName(e.target.value)}
+                  />
+                </label>
+              </>
+            )}
+            <label className="form-control w-full max-w-xs my-2">
+              <div className="label">
+                <span className="label-text">Email ID:</span>
+              </div>
+              <input
+                type="text"
+                value={emailId}
+                className="input input-bordered w-full max-w-xs"
+                onChange={(e) => setEmailId(e.target.value)}
+              />
+            </label>
+            <label className="form-control w-full max-w-xs my-2">
+              <div className="label">
+                <span className="label-text">Password</span>
+              </div>
+              <input
+                type="password"
+                value={password}
+                className="input input-bordered w-full max-w-xs"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </label>
+          </div>
+          <p className="text-red-500">{error}</p>
+          <div className="card-actions justify-center m-2">
+            <button
+              className="btn btn-primary"
+              onClick={isLoginForm ? handleLogin : handleSignUp}
+            >
+              {isLoginForm ? "Login" : "Sign Up"}
+            </button>
+          </div>
 
-    <h2 className="text-3xl font-bold text-white text-center mb-6">Welcome Back</h2>
-
-    <form className="space-y-5" onSubmit={handleSubmit}>
-      <div>
-        <label className="text-white font-medium">Email</label>
-        <input
-          type="email"
-          value={emailId}
-          placeholder="Enter your email"
-          className="w-full px-4 py-3 mt-1 rounded-xl bg-white/30 border border-white/40 placeholder-white/70 text-white focus:outline-none focus:ring-2 focus:ring-white/70"
-          onChange={(e)=>setEmailId(e.target.value)}
-        />
+          <p
+            className="m-auto py-2"
+          >
+            {isLoginForm? "New User? ": "Existing User? "}
+            <span className='hover:text-blue-500 cursor-pointer' onClick={() => setIsLoginForm((value) => !value)}>{isLoginForm?"Signup here":"Login here"}</span>
+          </p>
+          {/* //{isLoginForm
+              ? "New User? Signup Here"
+              : "Existing User? Login Here"} */}
+        </div>
       </div>
-      <div>
-        <label className="text-white font-medium">Password</label>
-        <input
-          type={!showPass?"password":"text"}
-          value={password}
-          placeholder="Enter your password"
-          className="w-full px-4 py-3 mt-1 rounded-xl bg-white/30 border border-white/40 placeholder-white/70 text-white focus:outline-none focus:ring-2 focus:ring-white/70"
-          onChange={(e)=>setPassword(e.target.value)}
-        />
-      </div>
-      <div className="flex items-center hover:cursor-pointer">
-        <input type="checkbox"
-        onClick={()=>setShowPass(prevState=>!prevState)}
-        />
-        <span className="ml-1 text-center">show password</span>
-      </div>
-      <div className="flex justify-end">
-        <a href="#" className="text-white/80 text-sm hover:text-white underline">
-          Forgot password?
-        </a>
-      </div>
-      <button
-        className="w-full bg-white text-indigo-600 font-bold py-3 rounded-xl hover:bg-white/90 transition shadow-lg"
-      >
-        Login
-      </button>
-      <p className="text-red-500 text-center">{error}</p>
-    </form>
-    <p className="text-center text-white/80 mt-6">
-      Don’t have an account?
-      <a href="#" className="text-white font-semibold underline hover:text-white/90">Sign Up</a>
-    </p>
-  </div>
-  </div>
-  )
-}
-
+    </div>
+  );
+};
 export default Login;

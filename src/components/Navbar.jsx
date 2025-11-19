@@ -13,7 +13,7 @@ const Navbar = () => {
   const handleLogout=async()=>{
     try{
       // eslint-disable-next-line no-unused-vars
-      const response=await axios.post(BASE_URL+"/logout",{withCredentials:true})
+      const response=await axios.post(BASE_URL+"/logout",{},{withCredentials:true})
       dispatch(removeUser())
       return navigate("/login")
     }catch(err){
