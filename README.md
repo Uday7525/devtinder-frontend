@@ -20,4 +20,14 @@
  
 - add redux devtool extension to chrome
 - Login and see if your data is coming to store
-- 
+
+# deployement
+- create AWS account or signup
+- create instance or launch instance
+
+- go to downloads right click on .pem file and open security tab and go to advanced then disable inhereitence and remove all files like (system,administrator) except your mail id or (username)
+
+- open powershell/terminal 
+ -cd downloads
+ -use this command(ssh -i "uday-devTinder.pem" ubuntu@ec2-13-53-212-82.eu-north-1.compute.amazonaws.com)
+ -install node js 
