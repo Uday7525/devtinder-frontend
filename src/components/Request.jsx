@@ -6,7 +6,7 @@ import { BASE_URL } from '../utils/constants'
 import { useDispatch, useSelector } from 'react-redux'
 import { addRequest, removeRequest } from '../utils/requestSlice'
 
-const Requests = () => {
+const Request = () => {
    const dispatch=useDispatch()
    const requests=useSelector(store=>store.requests)
 
@@ -64,4 +64,4 @@ const Requests = () => {
   )
 }
 
-export default Requests
+export default Request
