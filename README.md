@@ -31,3 +31,14 @@
  -cd downloads
  -use this command(ssh -i "uday-devTinder.pem" ubuntu@ec2-13-53-212-82.eu-north-1.compute.amazonaws.com)
  -install node js 
+
+- git clone (from github (both frontend and backend))
+- cd devtinder-frontend
+ - npm install
+ - npm run build
+ - sudo apt update
+ - sudo apt install nginx
+ - sudo systemctl start nginx
+ - sudo systemctl enable nginx
+ - copy code from dist (build files) to /var/www/html
+ - sudo scp -r dist/* /var/www/html
