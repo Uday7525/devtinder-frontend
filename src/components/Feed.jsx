@@ -9,7 +9,7 @@ import { useEffect } from "react"
 const Feed=()=>{
     
     const feed=useSelector((store)=>store.feed)
-    console.log(feed)
+  
     
     const dispatch=useDispatch()
     const fetchFeed=async()=>{
