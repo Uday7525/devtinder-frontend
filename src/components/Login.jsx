@@ -39,7 +39,7 @@ const Login = () => {
         { firstName, lastName, emailId, password },
         { withCredentials: true }
       );
-      dispatch(addUser(res.data.data));
+      dispatch(addUser(res.data));
       return navigate("/profile");
     } catch (err) {
       setError(err?.response?.data || "Something went wrong");
@@ -119,9 +119,6 @@ const Login = () => {
             {isLoginForm? "New User? ": "Existing User? "}
             <span className='hover:text-blue-500 cursor-pointer' onClick={() => setIsLoginForm((value) => !value)}>{isLoginForm?"Signup here":"Login here"}</span>
           </p>
-          {/* //{isLoginForm
-              ? "New User? Signup Here"
-              : "Existing User? Login Here"} */}
         </div>
       </div>
     </div>
