@@ -29,7 +29,7 @@
 
 - open powershell/terminal 
  -cd downloads
- -use this command(ssh -i "uday-devTinder.pem" ubuntu@ec2-13-53-212-82.eu-north-1.compute.amazonaws.com)
+ -use this command(in gitignore)
  -install node js 
 
 - git clone (from github (both frontend and backend))
