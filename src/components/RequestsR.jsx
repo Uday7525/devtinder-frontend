@@ -37,7 +37,7 @@ const RequestsR = () => {
   if(requests.length===0) return <h1 className='font-bold text-center my-10'>No requests Found</h1>
   return (requests&&
     <div className='flex flex-col justify-center items-center my-5'>
-        <h1 className='font-bold text-white-500 text-center text-3xl'>Requests</h1>
+        <h1 className='font-bold text-white-500 text-center text-3xl'>Requests ({requests.length})</h1>
         {requests.map(request=>{
         const {_id,firstName,lastName,imageUrl,bio,age,gender}=request.fromUserId
         return(
