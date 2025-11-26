@@ -4,10 +4,15 @@ import { BASE_URL } from "./constants";
 
 export const createSocketConnection=()=>{
   if(location.hostname==="localhost"){
-    return io(BASE_URL);
+    return io(BASE_URL,{
+      transports:["websocket"],
+      path:"/socket.io",
+    });
   }
   else{
-    return io("/",{path:"/api/socket.io"})
+    return io("/",{
+      transports:["websocket"],
+      path:"/socket.io"})
   }
 
 }
